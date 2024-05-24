@@ -3,11 +3,9 @@ import javalang
 
 def contains_slf4j_logging(node, slf4j_loggers):
     if isinstance(node, javalang.tree.StatementExpression):
-        print(node.position)
-        if isinstance(node.expression.value, javalang.tree.MethodInvocation):
-            print(node.expression.value)
-            print()
-            if node.expression.value.qualifier in slf4j_loggers:
+        if isinstance(node.expression, javalang.tree.MethodInvocation):
+            print(node.expression.qualifier)
+            if node.expression.qualifier in slf4j_loggers:
                 return True
     return False
 
@@ -31,15 +29,22 @@ def count_branches(node, slf4j_loggers):
     total_branches = 0
     branches_with_logs = 0
 
-    # Check for IfStatement
     if isinstance(node, javalang.tree.IfStatement):
         total_branches += 1
-        if any(contains_slf4j_logging(stmt, slf4j_loggers) for stmt in node.then_statement):
-            branches_with_logs += 1
-        if hasattr(node, 'else_statement') and node.else_statement is not None:
-            total_branches += 1
-            if any(contains_slf4j_logging(stmt, slf4j_loggers) for stmt in node.else_statement):
+        if hasattr(node.then_statement, 'statements'):
+            if any(contains_slf4j_logging(stmt, slf4j_loggers) for stmt in node.then_statement.statements):
                 branches_with_logs += 1
+        else:
+            if contains_slf4j_logging(node.then_statement, slf4j_loggers):
+                branches_with_logs += 1
+        if node.else_statement is not None:
+            total_branches += 1
+            if hasattr(node.else_statement, 'statements'):
+                if any(contains_slf4j_logging(stmt, slf4j_loggers) for stmt in node.else_statement.statements):
+                    branches_with_logs += 1
+            else:
+                if contains_slf4j_logging(node.else_statement, slf4j_loggers):
+                    branches_with_logs += 1
 
     # Check for SwitchStatementCase
     if isinstance(node, javalang.tree.SwitchStatementCase):
@@ -76,7 +81,7 @@ def parse_java_files(directory):
                         slf4j_loggers = set()
                         if any('org.slf4j.Logger' in imp or 'org.slf4j.LoggerFactory' in imp.path for imp in tree.imports):
                             collect_slf4j_loggers(tree, slf4j_loggers)
-                        print(file_path)
+
                         for _, node in tree:
                             tb, bwl = count_branches(node, slf4j_loggers)
                             total_branches += tb
@@ -87,7 +92,7 @@ def parse_java_files(directory):
     return total_branches, branches_with_logs
 
 # Define the path to your Java repository
-repository_path = './jodd'
+repository_path = './AxonFramework'
 
 total_branches, branches_with_logs = parse_java_files(repository_path)
 
