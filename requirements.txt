@@ -1,0 +1,4 @@
+javalang
+pygithub
+gitpython
+python-decouple
