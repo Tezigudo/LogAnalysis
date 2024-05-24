@@ -121,11 +121,12 @@ if total_branches > 0:
 else:
     percent_with_logs = 0
 
-print(f"Total number of conditional branches: {total_branches}")
-print(f"Number of if branches: {if_branches}")
-print(f"Number of else branches: {else_branches}")
-print(f"Number of switch cases: {switch_cases}")
-print(f"Number of if branches with SLF4J logging: {if_branches_with_logs}")
-print(f"Number of else branches with SLF4J logging: {else_branches_with_logs}")
-print(f"Number of switch cases with SLF4J logging: {switch_cases_with_logs}")
+print(f"Number of if branches with SLF4J logging: {if_branches_with_logs}/{if_branches}")
+print(f"Number of else branches with SLF4J logging: {else_branches_with_logs}/{else_branches}")
+print(f"Number of switch cases with SLF4J logging: {switch_cases_with_logs}/{switch_cases}")
+print(f"Number of total branches with SLF4J logging: {branches_with_logs}/{total_branches}")
+print('-'*60)
+print(f"Percentage of if branches with SLF4J logging: {if_branches_with_logs/if_branches*100:.2f}%")
+print(f"Percentage of else branches with SLF4J logging: {else_branches_with_logs/else_branches*100:.2f}%")
+print(f"Percentage of switch cases with SLF4J logging: {switch_cases_with_logs/switch_cases*100:.2f}%")
 print(f"Percentage of branches with SLF4J logging: {percent_with_logs:.2f}%")
