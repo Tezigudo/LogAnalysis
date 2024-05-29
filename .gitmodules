@@ -1,3 +1,6 @@
-[submodule "AxonFramework"]
-	path = AxonFramework
-	url = https://github.com/AxonFramework/AxonFramework.git
+[submodule "jedis"]
+	path = jedis
+	url = https://github.com/redis/jedis.git
+[submodule "wro4j"]
+	path = wro4j
+	url = https://github.com/wro4j/wro4j.git

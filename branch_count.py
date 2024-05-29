@@ -109,7 +109,7 @@ def parse_java_files(directory):
     return (if_branches, else_branches, switch_cases,
             if_branches_with_logs, else_branches_with_logs, switch_cases_with_logs)
 
-repository_path = './AxonFramework'
+repository_path = './wro4j'
 
 if_branches, else_branches, switch_cases, if_branches_with_logs, else_branches_with_logs, switch_cases_with_logs = parse_java_files(repository_path)
 

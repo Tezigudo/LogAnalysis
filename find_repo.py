@@ -28,7 +28,7 @@ def find_repositories_with_criteria(language, min_stars):
 
 if __name__ == "__main__":
     language = "Java"
-    min_stars = 500
+    min_stars = 30
 
     repositories = find_repositories_with_criteria(language, min_stars)
 
