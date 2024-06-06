@@ -1,3 +1,6 @@
 [submodule "jedis"]
 	path = jedis
 	url = https://github.com/redis/jedis.git
+[submodule "wro4j"]
+	path = wro4j
+	url = https://github.com/Tezigudo/wro4j.git
